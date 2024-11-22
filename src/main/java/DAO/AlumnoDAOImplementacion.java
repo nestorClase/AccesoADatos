@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlumnoDAOImplementacion implements AlumnoDAO {
@@ -27,7 +28,7 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
 
     @Override
     public void crearAlumno(AlumnoEntidad alumno) {
-        String sql = "insert into alumno (cod_Alumno, nombre_Alumno, apellido_Alumno, fecha_Nacimiento, grupo) VALUES (?,?,?,?,?)";
+        String sql = "insert into alumno (cod_alumno, nombre_alumno, apellidos_alumno, fecha_nacimiento, grupo) VALUES (?,?,?,?,?)";
         try(Connection connection = dataSource.getConnection()) {
             connection.prepareStatement(sql);
             PreparedStatement pst = connection.prepareStatement(sql);
@@ -44,7 +45,7 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
 
     @Override
     public AlumnoEntidad obtenerAlumnoPorId(String id) {
-        String sql = "select * from alumno where cod_Alumno = "+(id);
+        String sql = "select * from alumno where cod_alumno = ?";
         try(Connection connection = dataSource.getConnection()) {
             connection.prepareStatement(sql);
             PreparedStatement pst = connection.prepareStatement(sql);
@@ -52,10 +53,10 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
             try(ResultSet resultSet = pst.executeQuery()) {
                 if (resultSet.next()) {
                     return new AlumnoEntidad(
-                            resultSet.getString("cod_Alumno"),
-                            resultSet.getString("nombre_Alumno"),
-                            resultSet.getString("apellido_Alumno"),
-                            resultSet.getDate("fecha_Nacimiento"),
+                            resultSet.getString("cod_alumno"),
+                            resultSet.getString("nombre_alumno"),
+                            resultSet.getString("apellidos_alumno"),
+                            resultSet.getDate("fecha_nacimiento"),
                             resultSet.getString("grupo").charAt(0)
                     );
                 }
@@ -68,7 +69,7 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
 
     @Override
     public List<AlumnoEntidad> obtenerTodosLosAlumnos() {
-        List<AlumnoEntidad> alumnos = null;
+        List<AlumnoEntidad> alumnos = new ArrayList<>();
         String sql = "select * from alumno";
         try(Connection connection = dataSource.getConnection()) {
             connection.prepareStatement(sql);
@@ -76,10 +77,10 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
             try(ResultSet resultSet = pst.executeQuery()) {
                 while (resultSet.next()) {
                     alumnos.add(new AlumnoEntidad(
-                            resultSet.getString("cod_Alumno"),
-                            resultSet.getString("nombre_Alumno"),
-                            resultSet.getString("apellido_Alumno"),
-                            resultSet.getDate("fecha_Nacimiento"),
+                            resultSet.getString("cod_alumno"),
+                            resultSet.getString("nombre_alumno"),
+                            resultSet.getString("apellidos_alumno"),
+                            resultSet.getDate("fecha_nacimiento"),
                             resultSet.getString("grupo").charAt(0)
                     ));
                 }
@@ -92,7 +93,7 @@ public class AlumnoDAOImplementacion implements AlumnoDAO {
 
     @Override
     public void actualizarAlumno(AlumnoEntidad alumno) {
-        String sql = "update alumno set nombre_Alumno = ?, apellido_Alumno = ?, fecha_Nacimiento = ?, grupo = ? where cod_Alumno = ?";
+        String sql = "update alumno set nombre_alumno = ?, apellidos_alumno = ?, fecha_nacimiento = ?, grupo = ? where cod_Alumno = ?";
         try(Connection connection = dataSource.getConnection()) {
             connection.prepareStatement(sql);
             PreparedStatement pst = connection.prepareStatement(sql);
