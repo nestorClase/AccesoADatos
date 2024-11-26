@@ -1,5 +1,7 @@
 import DTO.AlumnoDTO;
+import DTO.ProfesorDTO;
 import Servicios.AlumnoServicio;
+import Servicios.ProfesorServicio;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.sql.DataSource;
@@ -10,13 +12,14 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
-        AlumnoServicio alumnoServicio = AlumnoServicio.getInstancia(getMySqlDataSource());
-        System.out.println(alumnoServicio.crearAlumno(new AlumnoDTO("1", "Pedro", "Fernandez", 35, 'A')));
-        System.out.println(alumnoServicio.obtenerAlumnoPorId("1").toString());
-        System.out.println(alumnoServicio.actualizarAlumno("1", new AlumnoDTO("1", "alejandro", "pupu", 20, 'C')));
-        System.out.println(alumnoServicio.obtenerAlumnoPorId("1").toString());
-        System.out.println(alumnoServicio.eliminarAlumno("1"));
-        System.out.println(alumnoServicio.obtenerTodosLosAlumnos());
+        ProfesorServicio profesor = ProfesorServicio.getInstancia(getMySqlDataSource());
+        System.out.println(profesor.crearProfesor(new ProfesorDTO("1", "Pedro", "Oviedo")));
+        System.out.println(profesor.obtenerProfesorPorId("1").toString());
+        System.out.println(profesor.actualizarProfesor("1", new ProfesorDTO("1", "alejandro", "Aviles")));
+        System.out.println(profesor.obtenerProfesorPorId("1").toString());
+        System.out.println(profesor.eliminarProfesor("1"));
+        System.out.println(profesor.obtenerTodosLosProfesores());
+        System.out.println(profesor.obetenermodulos("02"));
     }
 
     public static DataSource getMySqlDataSource(){
