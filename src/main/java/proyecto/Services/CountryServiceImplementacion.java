@@ -36,4 +36,8 @@ public class CountryServiceImplementacion implements CountryService {
         return countryRepository.save(country).getId();
     }
 
+    @Override
+    public List<Country> findByName(String name) {
+        return List.of();
+    }
 }

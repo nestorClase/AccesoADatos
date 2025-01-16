@@ -1,5 +1,6 @@
 package proyecto.Services;
 
+import org.springframework.data.jpa.repository.Query;
 import proyecto.Entidades.Country;
 
 import java.util.List;
@@ -13,4 +14,8 @@ public interface CountryService {
     void delete(Long id);
 
     Long create(Country country);
+
+
+    @Query("SELECT c FROM Country c WHERE c.name = ?1")
+    List<Country> findByName(String name);
 }
