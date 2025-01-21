@@ -1,4 +1,4 @@
-package org.example.springboot_relaciones.Unidireccional.manyToMany;
+package org.example.springboot_relaciones.Unidireccional.ManyToMany;
 
 import jakarta.persistence.*;
 
